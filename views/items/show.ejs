@@ -1,0 +1,46 @@
+
+
+
+    <%- include("../partials/header") %>
+
+    <div class="container mt-4">
+
+        <h4 style="text-align: center">Product Detail </h4>     
+
+    
+                  <div class="card text-center">
+                    <div class="card-header text-white bg-dark">
+                      Seller: <span class="productName"><%= item.user.fullname %></span> 
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Product Name: <%= item.name %> </h5>
+                      <p class="card-title"><%= item.itemDetails %></p>
+                      <p class="card-text">Price: $<%= item.price %></p>
+                      <p class="card-text">Status: <%= item.status %></p>
+
+                      <% if(item.status == "SOLD OUT") { %>
+                        <div>
+                          <strong style="color: red">This item is sold out and currenttly out of stock</strong>
+                        </div>
+                        <% } else if (authorized && (item.user.email !== user.email)){ %>
+                          <div>
+                            <form class="inline-form" action="/items/buy" method="post" onsubmit="return confirm('Are you sure you want to purchase this item?')">
+                              <input type="hidden" value="<%= item._id %>" name="id">
+                              <button type="submit" class="btn btn-success" >Buy Now</button>
+                            </form>
+                          </div>
+                          <% } %>
+                          <a href="/items" class="btn btn-secondary">Back</a>
+
+                    </div>
+                    <div class="card-footer text-muted">
+                      <span>Updated at : <%= item.updatedAt.toLocaleString() %></span>
+                    </div>
+                  </div>
+                  
+        
+    </div>
+
+
+
+    <%- include("../partials/footer") %>
