@@ -4,8 +4,7 @@ const { index, new: _new, create, show, delete: _delete, edit, update, buy, your
 //calling the authenticated function to set the auth
 function auth(req, res, next) {
     if (!req.isAuthenticated()) {
-        req.flash("danger", "you need to login first")
-        return res.redirect("/login")
+        return res.status(401).json({ message: "You must be authenticated" })
     }
     next();
 }

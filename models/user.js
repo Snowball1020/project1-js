@@ -23,7 +23,10 @@ const UserSchema = new mongoose.Schema({
     }
   },
 }, {
-    timestamps: true
+    timestamps: true,
+    toJSON: {
+      getters: true
+    }
   });
 
 // Virtuals
@@ -56,7 +59,7 @@ UserSchema.virtual('passwordConfirmation')
 
 UserSchema.virtual('fullname')
   .get(function () {
-    return this.firstName + " " + this.lastName;
+    return `${this.firstName} ${this.lastName}`;
   })
 
 //set up passport plugin

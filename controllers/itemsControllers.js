@@ -29,15 +29,15 @@ exports.index = async (req, res) => {
     const items = await Item
       .find()
       .populate("user")
-    res.render(`${view}/index`, {
-      pageTitle: "Index Page",
-      items: items,
-      user: req.user
-    })
+      .sort({
+        updatedAt: "desc"
+      });
+
+    res.status(200).json(items)
 
   } catch (error) {
-    req.flash('danger', `${error}, error happened reading index page, back to home page`);
-    res.redirect("/")
+    res.status(400).json({ message: "There was sn Error fetching items", error })
+
   }
 }
 
@@ -74,27 +74,14 @@ exports.create = async (req, res) => {
 
   const { name, description, price } = req.body
 
-  if (!name || !description || !price) {
-    req.flash('danger', `Please fill in all fields`);
-    res.redirect("/items/new")
-  }
+  try {
+    const user = await User.findOne({ email: req.user.email })
+    const item = await Item.create({ user: user._id, ...req.body })
 
-  if (price < 0) {
-    req.flash('danger', `Price should be more than $0 `);
-    res.redirect("/items/new")
-  } else {
+    res.status(200).json(item)
 
-    try {
-      const user = await User.findOne({ email: req.user.email })
-      const item = await Item.create({ user: user._id, ...req.body })
-      req.flash('success', `Your item has been posted on the list!`);
-      res.redirect("/items")
-
-    } catch (error) {
-      req.flash('danger', `${error}`);
-      res.redirect("/items/new")
-    }
-
+  } catch (error) {
+    res.status(400).json({ message: "There was an error posting the item", error })
   }
 
 }
@@ -106,14 +93,10 @@ exports.show = async (req, res) => {
     const item = await Item
       .findOne({ _id: req.params.id })
       .populate("user")
-    res.render(`${view}/show`, {
-      pageTitle: "Show Page",
-      item: item,
-      user: req.user
-    })
+
+    res.status(200).json(item)
   } catch (error) {
-    req.flash('danger', `${error}`);
-    res.redirect("/items")
+    res.status(400).json({ message: "There was an issue to fetch the item" })
   }
 
 }
@@ -176,14 +159,10 @@ exports.delete = async (req, res) => {
 
   try {
     await Item.remove({ _id: req.body.id })
-    req.flash('danger', `The item deleted`);
-    res.redirect("/items")
-
+    res.status(200).json({ message: "Deleted" })
   } catch (error) {
 
-    req.flash('danger', `failed to delete`);
-    res.redirect("/items")
-
+    res.status(400).json({ message: "There was an error deleting the item" })
   }
 
 }
