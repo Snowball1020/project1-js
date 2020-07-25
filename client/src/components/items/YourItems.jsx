@@ -18,14 +18,14 @@ const YourItems = function ({user}) {
 
     const getItems = async () => {
         //fetching all data that belongs to the logged in user 
-        const itemsResp = await Axios.get("/items/youritems")
+        const itemsResp = await Axios.get("/api/items/youritems")
         if(itemsResp.status === 200) setItems(itemsResp.data)
     }
 
     const deleteItem = async item =>{
  
         try{
-            const resp = await Axios.post("/items/delete",{
+            const resp = await Axios.post("/api/items/delete",{
                 id:item._id
             })    
             if(resp.status === 200) toast("The item deleted successfully",{

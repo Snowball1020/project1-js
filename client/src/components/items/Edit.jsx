@@ -22,7 +22,7 @@ const Edit = function (props) {
     useEffect(()=>{
         (async () => {
             //Hit edit path in backedn
-            const itemResp = await Axios.get(`/items/${id}`)
+            const itemResp = await Axios.get(`/api/items/${id}`)
             if(itemResp.status === 200) setInputs(itemResp.data)
         })();
     },[])
@@ -35,7 +35,7 @@ const Edit = function (props) {
 
         try{
             //hit update path attached inputs data
-            const resp = await Axios.post("/items/update",inputs)
+            const resp = await Axios.post("/api/items/update",inputs)
 
             if(resp.status === 200){
     

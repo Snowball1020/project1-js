@@ -27,7 +27,7 @@ const Show = function (user) {
     //getShow fetches one particular selected item
     const getShow = async () => {
         //hit show path with clicked item
-        const itemResp = await Axios.get(`/items/${id}`)
+        const itemResp = await Axios.get(`/api/items/${id}`)
         //take user fullname ans set it to owner 
         setOwner(itemResp.data.user.fullname)
         //take the bought item and its id
@@ -48,7 +48,7 @@ const Show = function (user) {
 
         try{
             //Hit buy path in backend attached with cliked item id
-            const resp = await Axios.post("/items/buy", {_id:soldItem})
+            const resp = await Axios.post("/api/items/buy", {_id:soldItem})
             if(resp.status === 200){
     
                 toast("You have bought this item. Thank you for your shopping!! ",{

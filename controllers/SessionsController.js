@@ -44,8 +44,10 @@ exports.authenticate = (req, res, next) => {
 
 // Step 2: Log the user out
 exports.delete = (req, res) => {
+
+  return res.status(200).json({ message: "logged out" })
   req.logout();
-  req.flash("primary", "You are logged out")
-  res.redirect("/login")
+
+
 
 };

@@ -23,7 +23,7 @@ const New = function () {
         //Use try and catch so toast works
         try{
             //hit new path in backend with inputs value attached
-            const resp = await Axios.post("/items",inputs)
+            const resp = await Axios.post("/api/items",inputs)
 
             if(resp.status === 200){
     

@@ -17,7 +17,7 @@ const Index = function ({user}) {
 
     const getItems = async () => {
         //Hit index path in backend
-        const itemsResp = await Axios.get("/items")
+        const itemsResp = await Axios.get("/api/items")
         //if the response was 200, set the value to items
         if(itemsResp.status === 200) setItems(itemsResp.data)
         //now "items" is available return statement
@@ -27,7 +27,7 @@ const Index = function ({user}) {
 
         try{
             //Hit delete path in backend
-            const resp = await Axios.post("/items/delete",{
+            const resp = await Axios.post("/api/items/delete",{
                 id:item._id
             })    
             if(resp.status === 200) toast("The item deleted successfully",{
