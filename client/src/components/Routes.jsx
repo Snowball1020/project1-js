@@ -10,6 +10,9 @@ import About from "./pages/About"
 import Login from "./sessions/Login"
 import Logout from "./sessions/Logout"
 
+//Components for users
+import Register from "./users/Register"
+
 //Components for items
 import Items from "./items/Index"
 import YourItems from "./items/YourItems"
@@ -27,6 +30,13 @@ function Routes ({user , setUser}) {
 
             <Route exact path="/login" render={
                 renderProps => <Login 
+                {...renderProps}
+                setUser={setUser}
+                />
+            }/>
+
+            <Route exact path="/register" render={
+                renderProps => <Register 
                 {...renderProps}
                 setUser={setUser}
                 />
