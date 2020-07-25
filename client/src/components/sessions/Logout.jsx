@@ -15,7 +15,7 @@ const Logout = ({setUser}) => {
                 if(resp.status === 200){
                     setUser(false)
                     toast("You logged out",{
-                        type:toast.TYPE.SUCCESS
+                        type:toast.TYPE.DARK
                     })
                     setRedirect(true)
                 }

@@ -1,18 +1,23 @@
 import React from "react"
+//important, Route and Switch controlls transition between components
 import {Route, Switch} from "react-router-dom"
 
+//Components for Pages
 import Home from "./pages/Home"
 import About from "./pages/About"
+
+//Components for sessions
 import Login from "./sessions/Login"
 import Logout from "./sessions/Logout"
 
+//Components for items
 import Items from "./items/Index"
 import YourItems from "./items/YourItems"
-
 import NewItem from "./items/New"
 import EditItem from "./items/Edit"
 import ShowItem from "./items/Show"
 
+//Get user and setUser props from App
 function Routes ({user , setUser}) {
     return(
         <Switch>

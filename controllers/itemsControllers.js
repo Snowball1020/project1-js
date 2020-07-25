@@ -122,12 +122,10 @@ exports.update = async (req, res) => {
     const contents = { user: user._id, ...req.body }
     const item = await Item.findByIdAndUpdate(req.body.id, contents)
 
-    req.flash('success', 'The item updated successfully');
-    res.redirect(`/items/${req.body.id}`);
+    res.status(200).json(item)
 
   } catch (error) {
-    req.flash('danger', `${error}`);
-    res.redirect(`/items/${req.body.id}/edit`);
+    res.status(400).json({ message: "There was an issue to updating the item" })
   }
 }
 
@@ -139,7 +137,6 @@ exports.buy = async (req, res) => {
     const item = await Item.findByIdAndUpdate(req.body._id, {
       status: "SOLD OUT"
     })
-    console.log(`MVC: ${req.body._id}`)
     res.status(200).json({ message: "From MVC" })
 
   } catch (error) {

@@ -3,9 +3,9 @@ import {Form, Container} from "react-bootstrap"
 import Axios from "axios"
 import {Redirect} from "react-router-dom"
 import {toast} from "react-toastify"
+import {Link} from "react-router-dom"
 
 const New = function () {
-
 
     const [inputs, setInputs] = useState({
         name:"",
@@ -20,7 +20,9 @@ const New = function () {
     const handleSubmit = async event => {
         event.preventDefault()
 
+        //Use try and catch so toast works
         try{
+            //hit new path in backend with inputs value attached
             const resp = await Axios.post("/items",inputs)
 
             if(resp.status === 200){
@@ -28,7 +30,7 @@ const New = function () {
                 toast("You have posted your item successfuly",{
                     type:toast.TYPE.SUCCESS
                 })
-    
+                //if posted successfully, set redirect true
                 setRedirect(true)
             }else{
                 toast("There was an issue posting your item",{
@@ -41,10 +43,10 @@ const New = function () {
                 toast("There was an issue posting your item",{
                     type:toast.TYPE.ERROR
                 })
-
-        }
+            }
     }
 
+    //take inputs
     const handleInputChange = event => {
         event.persist();
         const {name, value} = event.target
@@ -52,8 +54,8 @@ const New = function () {
 
     }
 
+    // if redirect was true then take the user to /items
     if(redirect) return (<Redirect to="/items"/>)
-
 
     return(
         <Container>
@@ -110,13 +112,12 @@ const New = function () {
                     </Form.Group>
 
                 </Form>
+                
+                <Link to="/items" className="btn btn-secondary mt-2">Back</Link>
 
             </div>
-
-
+            
         </Container>
-
-
     )
 
 }

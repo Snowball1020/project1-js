@@ -3,9 +3,10 @@ import {Form, Container} from "react-bootstrap"
 import Axios from "axios"
 import {Redirect} from "react-router-dom"
 import {toast} from "react-toastify"
+import {Link} from "react-router-dom"
 
 const Edit = function (props) {
-
+    //Getting Items ID
     const id = props.location.state.id
 
     const [inputs, setInputs] = useState({
@@ -15,37 +16,38 @@ const Edit = function (props) {
         status:"ON SALE"
     })
 
-
     const [redirect, setRedirect] = useState(false)
 
+    //useEffect is triggered once as soon as the routs was hit
     useEffect(()=>{
         (async () => {
+            //Hit edit path in backedn
             const itemResp = await Axios.get(`/items/${id}`)
-            console.log(itemResp)
             if(itemResp.status === 200) setInputs(itemResp.data)
         })();
     },[])
 
 
-
+    //handleSubmit is excuted once Form submit
     const handleSubmit = async event => {
+    
         event.preventDefault()
 
         try{
+            //hit update path attached inputs data
             const resp = await Axios.post("/items/update",inputs)
 
             if(resp.status === 200){
     
                 toast("You have updated your item successfuly",{
-                    type:toast.TYPE.SUCCESS
+                    type:toast.TYPE.INFO
                 })
-    
+                //if update was successful, set redirect true
                 setRedirect(true)
             }else{
                 toast("There was an issue updating your item",{
                     type:toast.TYPE.ERROR
                 })
-    
             }
 
         }catch(error){
@@ -53,24 +55,23 @@ const Edit = function (props) {
                     type:toast.TYPE.ERROR
                 })
 
-        }
+            }
     }
 
+    //HandleInputChande happens every time changes occured in input field
     const handleInputChange = event => {
         event.persist();
         const {name, value} = event.target
         setInputs(inputs => ({...inputs, [name]: value}))
-        console.log(inputs)
-
     }
 
+    //if redirect was true then take the user to /items
     if(redirect) return (<Redirect to="/items"/>)
-
 
     return(
         <Container>
             <header>
-                <h1>Edit Item</h1>
+                <h1>Edit / Update Item</h1>
             </header>
             
             <div>
@@ -123,11 +124,11 @@ const Edit = function (props) {
 
                 </Form>
 
+                <Link to="/items" className="btn btn-secondary mt-2">Back</Link>
+
             </div>
 
-
         </Container>
-
 
     )
 

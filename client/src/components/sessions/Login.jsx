@@ -8,6 +8,7 @@ import {Redirect} from "react-router-dom"
 
 const Login = ({setUser}) => {
 
+    //Take inputs from users and put it in to object
     const [inputs, setInputs] = useState({
         email:"",
         password:""
@@ -20,6 +21,7 @@ const Login = ({setUser}) => {
         event.preventDefault()
 
         try{
+            //hit authenticate path with user input data
             const resp = await Axios.post("/authenticate",inputs)
 
             if(resp.status === 200){
@@ -44,6 +46,7 @@ const Login = ({setUser}) => {
 
     }
 
+    //take inputs from users and store them into value
     const handleInputChange = event => {
         event.persist();
         const {name, value} = event.target
@@ -51,6 +54,7 @@ const Login = ({setUser}) => {
 
     }
 
+    //if redirect was true, take the user to /items
     if(redirect)return <Redirect to="/items"/>
 
     return(

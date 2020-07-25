@@ -55,3 +55,11 @@ header:not(.home-cta), .alert {
   font-weight: bold;
   color: gold
 }
+
+.soldout{
+  color: red
+}
+
+.onsale{
+  color: blue
+}

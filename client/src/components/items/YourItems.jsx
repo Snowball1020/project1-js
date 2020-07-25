@@ -5,6 +5,7 @@ import {toast} from "react-toastify"
 import {Link} from "react-router-dom"
 
 
+//YourItems page is identical to index expect for fetching data that belongs to the logged in user only
 const YourItems = function ({user}) {
 
     const [items, setItems] = useState([])
@@ -16,11 +17,9 @@ const YourItems = function ({user}) {
     },[])
 
     const getItems = async () => {
-
+        //fetching all data that belongs to the logged in user 
         const itemsResp = await Axios.get("/items/youritems")
-        console.log(itemsResp.data)
         if(itemsResp.status === 200) setItems(itemsResp.data)
-        console.log(items)
     }
 
     const deleteItem = async item =>{
@@ -30,7 +29,7 @@ const YourItems = function ({user}) {
                 id:item._id
             })    
             if(resp.status === 200) toast("The item deleted successfully",{
-                type:toast.TYPE.SUCCESS
+                type:toast.TYPE.WARNING
             })
             getItems()    
         }catch(error){
@@ -41,8 +40,6 @@ const YourItems = function ({user}) {
         }
     }
 
-
-//    console.log(items)
     return(
         <Container className="my-5">
 
@@ -54,25 +51,25 @@ const YourItems = function ({user}) {
                      <div key={i} >
                        <div className="card">
 
-                            <div className="card-header text-white bg-dark" >
+                            <div className="card-header text-black bg-light" >
                             Seller: <span className="productName">{item.user.fullname} </span> <span className="time"> {item.updatedAt} </span>
                             </div>
 
                             <div className="card-body">
                                 <h5 className="card-title">Product Name : {item.name} </h5>
-                                <p className="card-title">{item.description}</p>
-                                <p className="card-text">${item.price}</p>
-                                <p className="card-text">{item.status}</p>
+
+                                <p className="card-title">Description : {item.description}</p>
+                                <p className="card-text">Price : ${item.price}</p>
+                                <p className="card-text">Status : {item.status}</p>
 
                                 {user ? (
                                     <>
-                                    <Link className="btn btn-primary mr-2" to={{pathname:"/items/show", 
-                                    state:{id:item._id}}} >View details</Link>
-        
-                                    <Link className="btn btn-success mr-2"  to={{pathname:"/items/edit", 
-                                    state:{id:item._id}}}>Edit</Link>
+                                        <Link className="btn btn-primary mr-2" to={{pathname:"/items/show", 
+                                        state:{id:item._id}}} >View details</Link>
+            
+                                        <Link className="btn btn-success mr-2"  to={{pathname:"/items/edit", 
+                                        state:{id:item._id}}}>Edit</Link>
 
-                                        <input type="hidden" value="<%= item._id %>" name="id"/>
                                         <button className="btn btn-danger" type="button" onClick={()=> deleteItem(item)}>
                                         Delete
                                         </button>
@@ -85,6 +82,8 @@ const YourItems = function ({user}) {
                           <br/>
                        </div>       
                     ))}
+    
+                    <Link to="/items" className="btn btn-secondary mt-2">Back</Link>
 
                     </div>
                 
