@@ -27,7 +27,7 @@ const Logout = ({setUser}) => {
         })();
     }, [])
 
-    if(redirect)return(<Redirect to="/items"/>)
+    if(redirect)return(<Redirect to="/"/>)
 
     return null
 }

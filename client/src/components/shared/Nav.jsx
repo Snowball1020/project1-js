@@ -21,12 +21,14 @@ function Nav ({user}) {
                         <Link className="nav-link" to="/about">About</Link>
                     </li>
 
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/items">View All Items</Link>
-                    </li>
                 
                 {user ? (
                     <>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/items">View All Items</Link>
+                    </li>
+
+
                     <li className="nav-item">
                     <Link className="nav-link" to="/items/new">Post Item</Link>
                     </li>

@@ -57,15 +57,12 @@ exports.youritems = async (req, res) => {
     const items = await Item
       .find({ user: req.user._id })
       .populate("user")
-    res.render(`${view}/youritems`, {
-      pageTitle: "Your Items",
-      items: items,
-      user: req.user
-    })
+
+    res.status(200).json(items)
+
 
   } catch (error) {
-    req.flash('danger', `${error}`);
-    res.redirect("/")
+    res.status(400).json({ message: "There was sn Error fetching items", error })
   }
 }
 
@@ -139,16 +136,14 @@ exports.buy = async (req, res) => {
 
   try {
 
-    const item = await Item.findByIdAndUpdate(req.body.id, {
+    const item = await Item.findByIdAndUpdate(req.body._id, {
       status: "SOLD OUT"
     })
-
-    req.flash('success', 'You purchased this Item! Thank you for your shopping today.');
-    res.redirect(`/items/${req.body.id}`);
+    console.log(`MVC: ${req.body._id}`)
+    res.status(200).json({ message: "From MVC" })
 
   } catch (error) {
-    req.flash('danger', `${error}`);
-    res.redirect(`/items`);
+    res.status(400).json({ message: "There was an error buying the item", error })
   }
 
 }

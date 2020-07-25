@@ -60,6 +60,7 @@ const Edit = function (props) {
         event.persist();
         const {name, value} = event.target
         setInputs(inputs => ({...inputs, [name]: value}))
+        console.log(inputs)
 
     }
 

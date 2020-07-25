@@ -5,7 +5,7 @@ import {toast} from "react-toastify"
 import {Link} from "react-router-dom"
 
 
-const Index = function ({user}) {
+const YourItems = function ({user}) {
 
     const [items, setItems] = useState([])
     
@@ -17,7 +17,7 @@ const Index = function ({user}) {
 
     const getItems = async () => {
 
-        const itemsResp = await Axios.get("/items")
+        const itemsResp = await Axios.get("/items/youritems")
         console.log(itemsResp.data)
         if(itemsResp.status === 200) setItems(itemsResp.data)
         console.log(items)
@@ -46,8 +46,8 @@ const Index = function ({user}) {
     return(
         <Container className="my-5">
 
-            <h4 className="reservation-list">Welcome {user.fullname}</h4>     
-            <h5 className="reservation-list mt-4">Item List</h5>
+            <h4 className="reservation-list">Hello {user.fullname}</h4>     
+            <h5 className="reservation-list mt-4">Your Items</h5>
             
             <div className="content">
                 { items && items.map((item,i) => (
@@ -64,11 +64,10 @@ const Index = function ({user}) {
                                 <p className="card-text">${item.price}</p>
                                 <p className="card-text">{item.status}</p>
 
+                                {user ? (
+                                    <>
                                     <Link className="btn btn-primary mr-2" to={{pathname:"/items/show", 
                                     state:{id:item._id}}} >View details</Link>
-
-                                {user && user.email === item.user.email ? (
-                                    <>
         
                                     <Link className="btn btn-success mr-2"  to={{pathname:"/items/edit", 
                                     state:{id:item._id}}}>Edit</Link>
@@ -93,4 +92,4 @@ const Index = function ({user}) {
             )
     }
 
-export default Index
+export default YourItems
